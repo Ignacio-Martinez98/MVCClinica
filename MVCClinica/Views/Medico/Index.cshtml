@@ -14,6 +14,14 @@
         @Html.TextBox("especialidad", null)
         <input type="submit" value="Get" />
     }
+    @using (Html.BeginForm("SearchByNombreApellido", "Medico", FormMethod.Get))
+    {
+        @Html.TextBox("nombre", "")
+        @Html.TextBox("apellido", "")
+
+        <input type="submit" value="Buscar por nombre y apellido" />
+
+    }
     <table>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Nombre)</th>

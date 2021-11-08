@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MVCClinica.Admin;
 using MVCClinica.Data;
 using System.Data.Entity;
+using MVCClinica.Filtros;
 
 namespace MVCClinica.Controllers
 {
@@ -16,6 +17,7 @@ namespace MVCClinica.Controllers
         {            
             return View("Index", AdmMedico.Listar());
         }
+        [Filtro]
         public ActionResult Create()
         {
             Medico medico = new Medico();
@@ -65,7 +67,7 @@ namespace MVCClinica.Controllers
         }
         public ActionResult Edit(int id)
         {
-            Medico medico = AdmMedico.BuscarPorId(id);
+            Medico medico = AdmMedico.BuscarPorIdParaEspecialidad(id);
             if (medico != null)
             {
                 return View("Edit", medico);
@@ -97,5 +99,15 @@ namespace MVCClinica.Controllers
                 return RedirectToAction("Index");
             return View("Index", AdmMedico.ListarEspecialidad(especialidad));
         }
+        public ActionResult SearchByNombreApellido(string nombre, string apellido)
+        {
+            if (nombre == "" && apellido == "")
+            {
+                return RedirectToAction("Index");
+            }
+            List<Medico> medicos = AdmMedico.BuscarMedicosPorNombreApellido(nombre, apellido);
+            return View("Index", medicos);
+        }
+
     }
 }

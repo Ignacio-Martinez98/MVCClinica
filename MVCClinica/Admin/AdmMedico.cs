@@ -32,7 +32,6 @@ namespace MVCClinica.Admin
         public static Medico BuscarPorId(int id)
         {
            Medico medico= context.Medicos.Find(id);
-           context.Entry(medico).State = EntityState.Detached;
             return medico;
         }
         public static void Eliminar(Medico medico)
@@ -51,6 +50,20 @@ namespace MVCClinica.Admin
                                                 where o.Especialidad == especialidad
                                                 select o).ToList();
             return medicosEspecialidad;
+        }
+        public static Medico BuscarPorIdParaEspecialidad(int id)
+        {
+            Medico medico = context.Medicos.Find(id);
+            context.Entry(medico).State = EntityState.Detached;
+            return medico;
+        }
+        public static List<Medico> BuscarMedicosPorNombreApellido(string nombre,string apellido)
+        {
+            List<Medico> medicosNombreApellido = (from m in context.Medicos
+                                                  where m.Nombre == nombre
+                                                  where m.Apellido == apellido
+                                                  select m).ToList();
+            return medicosNombreApellido;
         }
     }
 }
